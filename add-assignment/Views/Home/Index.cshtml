@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model add_assignment.Models.ViewModel.ViewModel_Index
+
+<v-container fluid grid-list-xl>
+    <v-layout wrap align-center>
+        <v-flex xs4>
+            <v-select :items="districts" label="District" item-text="Name" item-value="ID" v-model="selectedDistrict" v-on:change="getEstate()"></v-select>
+        </v-flex>
+        <v-flex xs4>
+            <v-select :items="estates" label="Estate" item-text="Name" item-value="ID" v-model="selectedEstate" v-on:change="getProperty()"></v-select>
+        </v-flex>
+        <v-flex xs12>
+            <v-data-table :headers="propertyTableHeader" :items="propertys" class="">
+                <template slot="items" slot-scope="props">
+                    <td>{{ props.item.DistrictName }}</td>
+                    <td>{{ props.item.EstateName }}</td>
+                    <td>{{ props.item.Block }}</td>
+                    <td>{{ props.item.Floor }}</td>
+                    <td>{{ props.item.Flat }}</td>
+                    <td>{{ props.item.GrossFloorArea }}</td>
+                    <td>{{ props.item.NumberOfBedroom }}</td>
+                    <td>
+                        <v-checkbox v-model="props.item.CarParkProvided" readonly></v-checkbox>
+                    </td>
+                    <td>{{ props.item.SellingPrice }}</td>
+                    <td>{{ props.item.RentalPrice }}</td>
+                </template>
+            </v-data-table>
+        </v-flex>
+    </v-layout>
+</v-container>
+
+<script>
+    let viewmodel_listdistrict = @Html.Raw(new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(Model.listDistrict))
+</script>
+@section scripts {
+    @Scripts.Render("~/Scripts/bundle/index.js")
+}
